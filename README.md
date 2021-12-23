@@ -1,6 +1,7 @@
-Customer Services Project
+## Customer Services Project:
 
 This project transforms the data needed for Customer Services analysis.
+
 This includes data from:
 - CSM Tickets (customer tickets)
 - ISM Tickets (internal tickets)
@@ -10,16 +11,17 @@ This includes data from:
 
 Currently the data is being sync'd to EDW and then transformed in there ready for analysis.
 
-Current Analysis Ready Datasets are:
-CSM:
+## Current Analysis Ready Datasets are:
+
+## CSM:
 - models/transformed/csm/fct_csm_tickets 
 - models/transformed/csm/fct_csm_events
 
-ISM:
+## ISM:
 - models/transformed/ism/fct_ism_tickets
 - models/transformed/ism/fct_ism_events
 
-Combined: (currently CSM and ISM Tickets)
+## Combined: (currently CSM and ISM Tickets)
 - models/transformed/combined/fct_combined_tickets
 - models/transformed/combined/fct_combined_events
 
