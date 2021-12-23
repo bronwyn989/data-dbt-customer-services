@@ -2,6 +2,8 @@
 #### Original Author: Bronwyn Smith
 #### Created using DBT
 
+***
+
 This project transforms the data needed for Customer Services analysis.
 
 This includes data from:
@@ -29,7 +31,6 @@ Currently the data is being sync'd to EDW and then transformed in there ready fo
 
 
 ***
-'''
 
 
 ### DBT Resources:
