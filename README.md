@@ -1,5 +1,6 @@
 ## Customer Services Project:
-Original Author: Bronwyn Smith
+#### Original Author: Bronwyn Smith
+#### Created using DBT
 
 This project transforms the data needed for Customer Services analysis.
 
@@ -27,7 +28,8 @@ Currently the data is being sync'd to EDW and then transformed in there ready fo
 - models/transformed/combined/fct_combined_events
 
 
-
+***
+***
 
 
 ### DBT Resources:
