@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: stg_uip_incoming_calls
+    description: This model loads in the UIP Incoming call data from both the old and the new DBs and does some date and time calculations
+  - name: stg_uip_outgoing_calls
+    description: This model loads in the UIP Outgoing call (call type = 9) data from both the old and the new DBs for the Ecommerce service and does some date and time calculations
+
+
+
+sources:
+  - name: uip_old
+    database: DW_DATAHUB_SMDB
+    schema: uip73a_archive_dbo
+    tables: 
+      - name: ACDCallDetail
+        description: incoming call details
+      - name: Service
+        description: Service lookup table
+      - name: tlkpCallAction
+        description: Call Action lookup table
+      - name: tlkpCallActionReason
+        description: Call Action Reason lookup table
+      - name: Disposition
+        description: Disposition lookup table
+      - name: AgentDispoDetail
+        identifier: AgentDispoDetailUIP73a
+        description: all call details - used to source outbound calls
+      - name: AMDInboundDetail
+        description: used to source incoming emails (only historical data)
+
+  - name: uip_new
+    database: DW_DATAHUB_SMDB
+    schema: uip_archive_dbo
+    tables: 
+      - name: ACDCallDetail
+        description: incoming call details
+      - name: Service
+        description: Service lookup table
+      - name: tlkpCallAction
+        description: Call Action lookup table
+      - name: tlkpCallActionReason
+        description: Call Action Reason lookup table
+      - name: Disposition
+        description: Disposition lookup table
+      - name: AgentDispoDetail
+        description: all call details - used to source outbound calls

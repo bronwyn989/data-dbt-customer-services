@@ -2,7 +2,7 @@ version: 2
 
 models:
     - name: fct_combined_tickets
-      description: This model combines the CSM and ISM tickets into one full table and assigns nulls to columns that don't match in the two data sets
+      description: This model combines the ISM, CSM and Fuse tickets into one full table and assigns nulls to columns that don't match in the two data sets
       columns:
       - name: EventLink
         description: Primary key - links to events table, used for counting tickets, combination of Ticket Number and Ticket Type to account for the same ticket number across different types (ISM and CSM)
@@ -59,7 +59,7 @@ models:
         description: Number of emails associated with a specific ticket (only applicable to CSM)
 
     - name: fct_combined_events
-      description: This model combines the ISM and CSM events tables to allow for the analysis across one date field
+      description: This model combines the ISM, CSM and Fuse events tables to allow for the analysis across one date field
       columns:
       - name: EventLink
         description: Primary key - links back to tickets table, combination of Ticket Number and Ticket Type to account for the same ticket number across different types (CSM and ISM Data)

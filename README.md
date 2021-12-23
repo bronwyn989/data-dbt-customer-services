@@ -10,7 +10,7 @@ This includes data from:
 - UIP Call Centre (call data)
 - Fuse Tickets (HR tickets)
 
-Currently the data is being sync'd to EDW and then transformed in there ready for analysis.
+Currently the data is being sync'd to EDW and then transformed ready for analysis.
 
 ***
 

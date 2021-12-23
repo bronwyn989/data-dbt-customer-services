@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_fuse_tickets
+    description: This model loads in the base Fuse ticket data, cleans up the field names and does some date calculations
+    columns:
+      - name: Ticket Number
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: Open Days
+        description: difference between created date and today
+      - name: Resolved Days
+        description: difference between created date and resolved date
+
+
+sources:
+  - name: fuse_tickets
+    database: DW_DATAHUB_SMDB
+    schema: HeatHR_Rep_polybase
+    tables: 
+      - name: vwFuseServices
+        description: Ticket Details

@@ -1,4 +1,4 @@
-     {% set datasets = ["fct_csm_events","fct_ism_events"] %}
+     {% set datasets = ["fct_csm_events","fct_ism_events","fct_fuse_events"] %}
 
     with
 
