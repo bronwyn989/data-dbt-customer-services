@@ -1,0 +1,78 @@
+version: 2
+
+models:
+    - name: fct_combined_tickets
+      description: This model combines the CSM and ISM tickets into one full table and assigns nulls to columns that don't match in the two data sets
+      columns:
+      - name: EventLink
+        description: Primary key - links to events table, used for counting tickets, combination of Ticket Number and Ticket Type to account for the same ticket number across different types (ISM and CSM)
+        tests:
+          - unique
+          - not_null
+      - name: Ticket Number
+        description: Key field to interrogate source data
+      - name: DataSet
+        description: Created, Resolved or Open
+      - name: Contact Type
+        description: CSM Ticket or ISM Ticket
+      - name: Ticket Type
+        description: Complaint or Request / Query for CSM | Service Request, Problem or Incident for ISM
+      - name: Source
+        description: Source of the ticket
+      - name: Ticket Created Date Time
+        description: Timestamp when ticket was created
+      - name: Resolved By Date Time
+        description: Timestamp when ticket was resolved
+      - name: Ticket Status
+        description: Current status of the ticket
+      - name: Company
+        description: Company to which the ticket is assigned
+      - name: Service
+        description: Service to which the ticket is assigned
+      - name: Category
+        description: Category to which the ticket is assigned
+      - name: SubCategory
+        description: SubCategory to which the ticket is assigned
+      - name: Owner Team
+        description: Owner Team to which the ticket is assigned
+      - name: Brand
+        description: Brand to which the ticket is assigned (Only applicable to CSM)
+      - name: Environment
+        description: Environment to which the ticket is assigned (Only applicable to ISM)
+      - name: Owner
+        description: Owner to which the ticket is assigned (Only applicable to CSM)
+      - name: Response Days
+        description: Number of days it took to respond to the ticket (only applicable to CSM)
+      - name: Resolved Days
+        description: Number of days it took to resolve to the ticket
+      - name: Open Days
+        description: Number of days since the ticket was opened
+      - name: Open Days Age
+        description: Bucket the open days belongs to eg 1 day, 2 days, 10-20 days etc
+      - name: Open Days Sort
+        description: Assists with sorting the Open Days Age column
+      - name: Flag <24 Hours Resolved
+        description: 1 or 0 indicating whether the ticket was resolved within 24 hours, working hours are not taken into account currently (only applicable to CSM)
+      - name: Flag <2 Hours Responded
+        description: 1 or 0 indicating whether the ticket was responded to within 2 hours, working hours are not taken into account currently (only applicable to CSM)
+      - name: Incoming Emails
+        description: Number of emails associated with a specific ticket (only applicable to CSM)
+
+    - name: fct_combined_events
+      description: This model combines the ISM and CSM events tables to allow for the analysis across one date field
+      columns:
+      - name: EventLink
+        description: Primary key - links back to tickets table, combination of Ticket Number and Ticket Type to account for the same ticket number across different types (CSM and ISM Data)
+        tests:
+          - unique
+          - not_null
+      - name: Event Type
+        description: Created / Resolved / Open
+      - name: Contact Type
+        description: CSM Ticket / ISM Ticket
+      - name: DateKey
+        description: Date that corresponds to the specific event - Created Date Time or Resolved Date Time, Open Date uses Created Date but is ignored mostly in calculations
+     
+
+
+  

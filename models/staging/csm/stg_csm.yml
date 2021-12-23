@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: stg_csm_tickets
+    description: This model loads in the base CSM ticket data, cleans up the field names and does some date calculations
+    columns:
+      - name: Ticket Number
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: Recid
+        description: Links to Journals to get emails count per ticket
+      - name: Open Days
+        description: difference between created date and today
+      - name: Response Days
+        description: difference between created date and response date
+      - name: Resolved Days
+        description: difference between created date and resolved date
+      - name: Flag <24 Hours Resolved
+        description: checks if the difference between created date and resolved date is less than a day (1 = yes, 0 = no)
+      - name: Flag <2 Hours Responded
+        description: checks if the difference between created date and response date is less than 2 hours (1 = yes, 0 = no)
+
+  - name: stg_csm_journals
+    description: This model does a count of all the emails per RecId to be joined to the Ticket Details table
+    columns:
+      - name: parentlink_recid
+        description: Links Journals to ticket details on RecID
+      - name: IncomingEmails
+        description: count of rows where journal type = email and category = incoming email
+
+sources:
+  - name: csm_tickets
+    database: DW_DATAHUB_SMDB
+    schema: HEAT_Rep_polybase
+    tables: 
+      - name: vwReputation
+        description: Ticket Details
+      - name: vwJournal
+        description: Contains additional contact details eg. No of Emails between TFG and Customer

@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_service_request_tickets
+    description: This model loads in the ISM Service Request data and cleans up the field names so they will align to the other ISM datatypes
+  - name: stg_problem_tickets
+    description: This model loads in the ISM Problem data and cleans up the field names so they will align to the other ISM datatypes
+  - name: stg_incident_tickets
+    description: This model loads in the ISM Incident data and cleans up the field names so they will align to the other ISM datatypes
+
+
+sources:
+  - name: ism_tickets
+    database: DW_DATAHUB_SMDB
+    schema: HEAT_Rep_polybase
+    tables: 
+      - name: vwServiceReq
+        description: Service Request Ticket Details
+      - name: vwIncident
+        description: Incident Ticket Details
+      - name: vwProblem
+        description: Problem Ticket Details

@@ -1,0 +1,79 @@
+version: 2
+
+models:
+    - name: fct_csm_tickets
+      description: This model joins the CSM tickets to the associated journal entries to get a total number of incoming emails per ticket and assigns the Open Days into buckets for easy analysis
+      columns:
+      - name: EventLink
+        description: Primary key - links to events table, used for counting tickets, combination of Ticket Number and Ticket Type to account for the same ticket number across different types when combining with ISM data
+        tests:
+          - unique
+          - not_null
+      - name: Ticket Number
+        description: Key field to interrogate source data
+      - name: Contact Type
+        description: CSM Ticket, used for differentiating when combining with ISM / UIP data
+      - name: Ticket Type
+        description: Complaint or Request / Query
+      - name: Source
+        description: Source of the ticket
+      - name: DateKey
+        description: Date field to join to calendar (Resolved Date for closed tickets, Created Date for tickets created)
+      - name: Ticket Created Date Time
+        description: Timestamp when ticket was created
+      - name: Resolved By Date Time
+        description: Timestamp when ticket was resolved
+      - name: Responded By Date Time
+        description: Timestamp when ticket was responded to
+      - name: Created Date
+        description: Date when ticket was created (used for events table)
+      - name: Resolved Date
+        description: Date when ticket was resolved (used for events table)
+      - name: Ticket Status
+        description: Current status of the ticket
+      - name: Company
+        description: Company to which the ticket is assigned
+      - name: Service
+        description: Service to which the ticket is assigned
+      - name: Category
+        description: Category to which the ticket is assigned
+      - name: SubCategory
+        description: SubCategory to which the ticket is assigned
+      - name: Owner Team
+        description: Owner Team to which the ticket is assigned
+      - name: Brand
+        description: Brand to which the ticket is assigned
+      - name: Owner
+        description: Owner to which the ticket is assigned
+      - name: Response Days
+        description: Number of days it took to respond to the ticket (only applicable to Resolved Tickets)
+      - name: Resolved Days
+        description: Number of days it took to resolve to the ticket (only applicable to Resolved Tickets)
+      - name: Open Days
+        description: Number of days since the ticket was opened (only applicable to Open Tickets)
+      - name: Open Days Age
+        description: Bucket the open days belongs to eg 1 day, 2 days, 10-20 days etc(only applicable to Open Tickets)
+      - name: Open Days Age Sort
+        description: Assists with sorting the Open Days Age column (only applicable to Open Tickets)
+      - name: Flag <24 Hours Resolved
+        description: 1 if the ticket was resolved within 24 hours, 0 if not, working hours are not taken into account currently (only applicable to Resolved Tickets)
+      - name: Flag <2 Hours Responded
+        description: 1 if the ticket was responded to within 2 hours, 0 if not, working hours are not taken into account currently (only applicable to Resolved Tickets)
+      - name: Incoming Emails
+        description: Number of emails associated with a specific ticket (only applicable to Resolved Tickets)
+
+
+    - name: fct_csm_events
+      description: This model breaks the CSM tickets into their specific events to allow for the analysis across one date field
+      columns:
+      - name: EventLink
+        description: Primary key - links back to tickets table, combination of Ticket Number and Ticket Type to account for the same ticket number across different types when combining with CSM data
+        tests:
+          - unique
+          - not_null
+      - name: Event Type
+        description: Created / Resolved / Open
+      - name: Contact Type
+        description: CSM Ticket
+      - name: DateKey
+        description: Date that corresponds to the specific event - Created Date Time or Resolved Date Time, Open Date uses Created Date but is ignored mostly in calculations
