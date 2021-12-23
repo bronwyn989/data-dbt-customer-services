@@ -2,8 +2,6 @@
 #### Original Author: Bronwyn Smith
 #### Created using DBT
 
-***
-
 This project transforms the data needed for Customer Services analysis.
 
 This includes data from:
@@ -12,8 +10,9 @@ This includes data from:
 - UIP Call Centre (call data)
 - Fuse Tickets (HR tickets)
 
-
 Currently the data is being sync'd to EDW and then transformed in there ready for analysis.
+
+***
 
 ### Current Analysis Ready Datasets are:
 
