@@ -22,7 +22,7 @@ SELECT  t1.[Call Start Date Time]
 		,t1.[Flag Answered]
 		,t1.[Is Answered]
 		,t5.[SubCategory]
-		,t1.DateKey,
+		,t1.DateKey
         ,t1.[Contact Type]
 	    ,t1.[Call Type]
 FROM {{ref(calltype)}} t1 with (NOLOCK)

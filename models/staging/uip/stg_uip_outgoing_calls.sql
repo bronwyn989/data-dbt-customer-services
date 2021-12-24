@@ -1,4 +1,4 @@
-{% set db_dictionary = [{'db': 'uip_old', 'services': '31,32'}, {'db': 'uip_new', 'services': '54,8'}]  %}
+{% set db_dictionary = set_uip_dbs() -%}
 
 with 
 
@@ -14,23 +14,19 @@ SELECT
 	,CallActionId
 	,CallActionReasonId
 	,[User_Id] [UIP Agent]
-	,null [Queue Start Date Time]
-	,null [Queue End Date Time]
+	,convert(datetime2,null) [Queue Start Date Time]
+	,convert(datetime2,null) [Queue End Date Time]
 	,null [Queue Time Seconds]
 	,convert(float,(CONVERT(DATETIME,[CallEndDt])-CONVERT(DATETIME,[CallStartDt])))*24*60*60	as [Call Time Seconds]
-	,null [Answered within SLA]
-	,null [Caller ID]
+	,convert(varchar,null) [Answered within SLA]
+	,convert(varchar,null) [Caller ID]
 	,[CallEndDt] [Call End Date Time]
-	,case when [CallEndDt] <> [CallStartDt] then 1
-		else 0
-		end				as [Flag Answered]
-	,case when [CallEndDt] <> [CallStartDt] then 'Answered'
-		else 'Not Answered'
-		end				as [Is Answered]
+	, IIF([CallEndDt] <> [CallStartDt], 1, 0) 	as [Flag Answered]
+	,IIF([CallEndDt] <> [CallStartDt], 'Answered', 'Not Answered') 			as [Is Answered]
 	,convert(DATETIME,floor(convert(float,(CONVERT(DATETIME,[CallEndDt]))))) AS DateKey,
     'Outbound UIP Call' as [Contact Type],
 	'Outbound Call' as [Call Type],
-	'{{ dict_item["db"] }}' as DatabaseSource                       
+	'{{ dict_item["db"] }}'  as DatabaseSource                       
 FROM {{ source(dict_item['db'], 'AgentDispoDetail') }} (NOLOCK) 
 where WorkGroup_Id=16 and CallTypeId=9 and Service_Id in ({{ dict_item['services'] }})
 

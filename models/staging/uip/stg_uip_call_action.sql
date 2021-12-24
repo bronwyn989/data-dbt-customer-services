@@ -9,7 +9,7 @@ with
 SELECT 
 	CallActionId,
 	[CallActionDesc]  [Call Action],
-	{{ uip_db }} 	as DatabaseSource                     
+	'{{ uip_db }}' 	as DatabaseSource                     
 FROM {{ source(uip_db, 'tlkpCallAction') }} (NOLOCK) 
 
 ),

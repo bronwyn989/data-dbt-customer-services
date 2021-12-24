@@ -1,16 +1,16 @@
-{% set uip_dbs = ["uip_old", "uip_new"] %}
+{% set db_dictionary = set_uip_dbs() -%}
 
 with 
 
-{% for uip_db in uip_dbs %}
+{% for dict_item in db_dictionary %}
 
-{{ uip_db }} as (
+{{ dict_item['db'] }} as (
 
 SELECT 
 	[CallStartDt] [Call Start Date Time]
 	,[SeqNum]	
 	,Service_Id
-	,AgentDispId as DispId
+	,AgentDispId as Disp_Id
 	,CallActionId
 	,CallActionReasonId
 	,[User_Id] [UIP Agent]
@@ -21,17 +21,13 @@ SELECT
 	,case when ISNULL(convert(float,(CONVERT(DATETIME,[QueueEndDt])-CONVERT(DATETIME,[QueueStartDt])))*24*60*60,0)<=20 then 'Yes' else 'No' end as [Answered within SLA]
 	,[CallerId] [Caller ID]
 	,[CallEndDt] [Call End Date Time]
-	,case when [CallEndDt] <> [QueueEndDt] then 1
-		else 0
-		end				as [Flag Answered]
-	,case when [CallEndDt] <> [QueueEndDt] then 'Answered'
-		else 'Not Answered'
-		end				as [Is Answered]
+	, IIF([CallEndDt] <> [CallStartDt], 1, 0) 	as [Flag Answered]
+	,IIF([CallEndDt] <> [CallStartDt], 'Answered', 'Not Answered') 			as [Is Answered]
 	,convert(DATETIME,floor(convert(float,(CONVERT(DATETIME,[CallEndDt]))))) AS DateKey,
     'Inbound UIP Call' as [Contact Type],
 	'Inbound Call' as [Call Type] ,
-	'{{ uip_db }}' 	as DatabaseSource                     
-FROM {{ source(uip_db, 'ACDCallDetail') }} (NOLOCK) 
+	'{{ dict_item["db"] }}' 	as DatabaseSource                     
+FROM {{ source(dict_item['db'] , 'ACDCallDetail') }} (NOLOCK) 
 
 ),
 
@@ -39,9 +35,9 @@ FROM {{ source(uip_db, 'ACDCallDetail') }} (NOLOCK)
 
 final_table as (
 
-	{% for uip_db in uip_dbs %}
+	{% for dict_item in db_dictionary %}
 	
-	select * from {{ uip_db }}
+	select * from {{ dict_item['db'] }}
 	
 	{% if not loop.last -%} union all {%- endif %}
 	

@@ -9,7 +9,7 @@ with
 SELECT 
 	Disp_Id,
 	[Disposition_Desc]  [SubCategory],
-	{{ uip_db }} 	as DatabaseSource                     
+	'{{ uip_db }}' 	as DatabaseSource                     
 FROM {{ source(uip_db, 'Disposition') }} (NOLOCK) 
 
 ),

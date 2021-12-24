@@ -9,7 +9,7 @@ with
 SELECT 
 	Service_Id,
 	[Service_c] [Service],
-	{{ uip_db }} 	as DatabaseSource                     
+	'{{ uip_db }}' 	as DatabaseSource                     
 FROM {{ source(uip_db, 'Service') }} (NOLOCK) 
 
 ),
