@@ -6,8 +6,8 @@ This project transforms the data needed for Customer Services analysis.
 
 This includes data from:
 - CSM Tickets (customer tickets)
-- ISM Tickets (internal tickets)
-- UIP Call Centre (call data)
+- ISM Tickets (internal tickets) 
+- UIP Call Centre (call data, currently there is a current db and a historical db)
 - Fuse Tickets (HR tickets)
 
 Currently the data is being sync'd to EDW and then transformed ready for analysis.
@@ -24,7 +24,11 @@ Currently the data is being sync'd to EDW and then transformed ready for analysi
 - models/transformed/ism/fct_ism_tickets
 - models/transformed/ism/fct_ism_events
 
-#### Combined: (currently CSM and ISM Tickets)
+#### Fuse:
+- models/transformed/ism/fct_fuse_tickets
+- models/transformed/ism/fct_fuse_events
+
+#### Combined: (currently CSM, ISM and Fuse Tickets)
 - models/transformed/combined/fct_combined_tickets
 - models/transformed/combined/fct_combined_events
 
